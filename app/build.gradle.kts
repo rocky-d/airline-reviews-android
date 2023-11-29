@@ -36,6 +36,12 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+//    packagingOptions {
+//        exclude("META-INF/org/languagetool/language-module.properties")
+//        exclude("META-INF/DEPENDENCIES")
+//    }
+
 }
 
 dependencies {
@@ -53,5 +59,5 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     implementation("com.kennycason:kumo-core:1.28")
-    implementation("com.kennycason:kumo-tokenizers:1.28")
+//    implementation("com.kennycason:kumo-tokenizers:1.28")
 }
