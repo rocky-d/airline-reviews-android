@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import java.nio.charset.StandardCharsets.UTF_8
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
+import kotlin.system.exitProcess
 
 class LoginActivity : AppCompatActivity() {
 
@@ -80,7 +81,7 @@ class LoginActivity : AppCompatActivity() {
     fun hashPassword(password: String): Long {
         val DIGEST_ALGORITHM = "SHA-256"
         val SALT = "6GYxNi78Dqd2I"
-        return try {
+        try {
             var hashedPassword: Long = 0
             val digest = MessageDigest.getInstance(DIGEST_ALGORITHM)
             val bytes = digest.digest((password + SALT).toByteArray(UTF_8))
@@ -88,12 +89,11 @@ class LoginActivity : AppCompatActivity() {
                 hashedPassword = hashedPassword shl 8
                 hashedPassword = hashedPassword or (b.toLong() and 0xFF)
             }
-            hashedPassword
+            return hashedPassword
         } catch (noSuchAlgorithmException: NoSuchAlgorithmException) {
             println("${noSuchAlgorithmException::class.java.name}: ${noSuchAlgorithmException.message}")
             noSuchAlgorithmException.printStackTrace(System.err)
-            System.exit(-2302)
-            0
+            exitProcess(-2302)
         }
     }
 }
