@@ -28,7 +28,7 @@ class LoginActivity : AppCompatActivity() {
 
             if (username.isEmpty() || password.isEmpty()) {
                 // Username or password is empty, show a toast and treat it as invalid credentials
-                Toast.makeText(this, "Username or password cannot be empty", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Username and Password cannot be empty", Toast.LENGTH_SHORT).show()
             } else {
                 if (isValidCredentials(username, password)) {
                     // Credentials are valid, navigate to the main activity
@@ -37,7 +37,7 @@ class LoginActivity : AppCompatActivity() {
                     // finish() // Optional: finish the login activity to prevent going back to it
                 } else {
                     // Invalid credentials, show a toast or an error message
-                    Toast.makeText(this, "Invalid credentials", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Invalid Credentials", Toast.LENGTH_SHORT).show()
                 }
             }
         }
