@@ -26,14 +26,19 @@ class LoginActivity : AppCompatActivity() {
             val username = editTextUsername.text.toString()
             val password = editTextPassword.text.toString()
 
-            if (isValidCredentials(username, password)) {
-                // Credentials are valid, navigate to the main activity
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-//                finish() // Optional: finish the login activity to prevent going back to it
+            if (username.isEmpty() || password.isEmpty()) {
+                // Username or password is empty, show a toast and treat it as invalid credentials
+                Toast.makeText(this, "Username or password cannot be empty", Toast.LENGTH_SHORT).show()
             } else {
-                // Invalid credentials, show a toast or an error message
-                Toast.makeText(this, "Invalid credentials", Toast.LENGTH_SHORT).show()
+                if (isValidCredentials(username, password)) {
+                    // Credentials are valid, navigate to the main activity
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    // finish() // Optional: finish the login activity to prevent going back to it
+                } else {
+                    // Invalid credentials, show a toast or an error message
+                    Toast.makeText(this, "Invalid credentials", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
