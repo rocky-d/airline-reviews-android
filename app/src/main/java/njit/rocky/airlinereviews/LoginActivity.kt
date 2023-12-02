@@ -45,29 +45,29 @@ class LoginActivity : AppCompatActivity() {
         // Check if the "user" table exists, if not, create it
         dbHelper.createTableIfNotExists(db)
 
-        val columns = arrayOf("USR_NAME", "USR_HASHEDPASSWORD")
-        val selection = "USR_NAME = ?"
-        val selectionArgs = arrayOf(username)
-        val cursor = db.query("user", columns, selection, selectionArgs, null, null, null)
+        val cursor = db.query(
+            "user",
+            arrayOf("USR_NAME", "USR_HASHEDPASSWORD"),
+            "USR_NAME = ?",
+            arrayOf(username),
+            null,
+            null,
+            null
+        )
 
-        val userExists = cursor.moveToFirst()
-
-        return if (userExists) {
-            val passwordIndex = cursor.getColumnIndex("USR_HASHEDPASSWORD")
-            val storedPassword = cursor.getString(passwordIndex)
-            cursor.close()
-            db.close()
-            password == storedPassword
+        val res = if (cursor.moveToFirst()) {
+            cursor.getLong(1) == hashPassword(password)
         } else {
             // User doesn't exist, add the new user to the table
             val contentValues = ContentValues()
             contentValues.put("USR_NAME", username)
             contentValues.put("USR_HASHEDPASSWORD", hashPassword(password))
             db.insert("user", null, contentValues)
-            cursor.close()
-            db.close()
             true
         }
+        cursor.close()
+        db.close()
+        return res
     }
 
     private fun hashPassword(password: String): Long {
