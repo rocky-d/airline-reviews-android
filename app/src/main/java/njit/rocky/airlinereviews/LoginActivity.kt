@@ -75,9 +75,8 @@ class LoginActivity : AppCompatActivity() {
         val SALT = "6GYxNi78Dqd2I"
         try {
             var hashedPassword: Long = 0
-            val digest = MessageDigest.getInstance(DIGEST_ALGORITHM)
-            val bytes = digest.digest((password + SALT).toByteArray(UTF_8))
-            for (b in bytes) {
+            for (b in MessageDigest.getInstance(DIGEST_ALGORITHM)
+                .digest((password + SALT).toByteArray(UTF_8))) {
                 hashedPassword = hashedPassword shl 8
                 hashedPassword = hashedPassword or (b.toLong() and 0xFF)
             }
