@@ -1,13 +1,21 @@
 package njit.rocky.airlinereviews
 
+import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import java.nio.charset.StandardCharsets.UTF_8
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
 
 class LoginActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -33,11 +41,83 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun isValidCredentials(username: String, password: String): Boolean {
-        // Implement your own logic for validating the credentials
-        // You can compare the entered username and password with a predefined value,
-        // check against a database, or use any other authentication mechanism.
-        // Return true if credentials are valid, false otherwise.
-        // Example: return (username == "admin" && password == "admin123")
-        return true
+        val dbHelper = UserDatabaseHelper(this)
+        val db = dbHelper.writableDatabase
+
+        // Check if the "user" table exists, if not, create it
+        dbHelper.createTableIfNotExists(db)
+
+        val columns = arrayOf("USR_NAME", "USR_HASHEDPASSWORD")
+        val selection = "USR_NAME = ?"
+        val selectionArgs = arrayOf(username)
+        val cursor = db.query("user", columns, selection, selectionArgs, null, null, null)
+
+        val userExists = cursor.moveToFirst()
+
+        if (userExists) {
+            val passwordIndex = cursor.getColumnIndex("USR_HASHEDPASSWORD")
+
+            return if (passwordIndex != -1) {
+                val storedPassword = cursor.getString(passwordIndex)
+                cursor.close()
+                db.close()
+                password == storedPassword
+            } else {
+                // Handle the case where the column doesn't exist
+                cursor.close()
+                db.close()
+                false
+            }
+        } else {
+            // User doesn't exist, add the new user to the table
+            val contentValues = ContentValues()
+            contentValues.put("USR_NAME", username)
+            contentValues.put("USR_HASHEDPASSWORD", hashPassword(password))
+            db.insert("user", null, contentValues)
+            cursor.close()
+            db.close()
+            return true
+        }
+    }
+
+    fun hashPassword(password: String): Long {
+        val DIGEST_ALGORITHM = "SHA-256"
+        val SALT = "6GYxNi78Dqd2I"
+        return try {
+            var hashedPassword: Long = 0
+            val digest = MessageDigest.getInstance(DIGEST_ALGORITHM)
+            val bytes = digest.digest((password + SALT).toByteArray(UTF_8))
+            for (b in bytes) {
+                hashedPassword = hashedPassword shl 8
+                hashedPassword = hashedPassword or (b.toLong() and 0xFF)
+            }
+            hashedPassword
+        } catch (noSuchAlgorithmException: NoSuchAlgorithmException) {
+            println("${noSuchAlgorithmException::class.java.name}: ${noSuchAlgorithmException.message}")
+            noSuchAlgorithmException.printStackTrace(System.err)
+            System.exit(-2302)
+            0
+        }
+    }
+}
+
+class UserDatabaseHelper(context: Context) : SQLiteOpenHelper(context, "user.sqlite.db", null, 1) {
+
+    override fun onCreate(db: SQLiteDatabase) {
+        createTableIfNotExists(db)
+    }
+
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        db.execSQL("DROP TABLE IF EXISTS user")
+        onCreate(db)
+    }
+
+    fun createTableIfNotExists(db: SQLiteDatabase) {
+        db.execSQL(
+            "CREATE TABLE IF NOT EXISTS user (\n" +
+                    "    USR_NAME            TEXT     NOT NULL  PRIMARY KEY  UNIQUE,\n" +
+                    "    USR_HASHEDPASSWORD  INTEGER  NOT NULL\n" +
+                    ");\n"
+        )
     }
 }
