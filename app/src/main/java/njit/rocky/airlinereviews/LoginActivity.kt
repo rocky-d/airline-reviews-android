@@ -78,7 +78,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    fun hashPassword(password: String): Long {
+    private fun hashPassword(password: String): Long {
         val DIGEST_ALGORITHM = "SHA-256"
         val SALT = "6GYxNi78Dqd2I"
         try {
