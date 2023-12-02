@@ -52,20 +52,12 @@ class LoginActivity : AppCompatActivity() {
 
         val userExists = cursor.moveToFirst()
 
-        if (userExists) {
+        return if (userExists) {
             val passwordIndex = cursor.getColumnIndex("USR_HASHEDPASSWORD")
-
-            return if (passwordIndex != -1) {
-                val storedPassword = cursor.getString(passwordIndex)
-                cursor.close()
-                db.close()
-                password == storedPassword
-            } else {
-                // Handle the case where the column doesn't exist
-                cursor.close()
-                db.close()
-                false
-            }
+            val storedPassword = cursor.getString(passwordIndex)
+            cursor.close()
+            db.close()
+            password == storedPassword
         } else {
             // User doesn't exist, add the new user to the table
             val contentValues = ContentValues()
@@ -74,7 +66,7 @@ class LoginActivity : AppCompatActivity() {
             db.insert("user", null, contentValues)
             cursor.close()
             db.close()
-            return true
+            true
         }
     }
 
