@@ -32,8 +32,7 @@ class LoginActivity : AppCompatActivity() {
             } else {
                 if (isValidCredentials(username, password)) {
                     // Credentials are valid, navigate to the main activity
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
+                    startActivity(Intent(this, MainActivity::class.java))
                     // finish() // Optional: finish the login activity to prevent going back to it
                 } else {
                     // Invalid credentials, show a toast or an error message
