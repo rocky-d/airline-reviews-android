@@ -19,7 +19,9 @@ class UserDatabaseHelper(context: Context) : SQLiteOpenHelper(context, "user.sql
         db.execSQL(
             "CREATE TABLE IF NOT EXISTS user (\n" +
                     "    USR_NAME            TEXT     NOT NULL  PRIMARY KEY  UNIQUE,\n" +
-                    "    USR_HASHEDPASSWORD  INTEGER  NOT NULL\n" +
+                    "    USR_HASHEDPASSWORD  INTEGER  NOT NULL,\n" +
+                    "    USR_EMAIL           TEXT,\n" +
+                    "    USR_PHONE           TEXT\n" +
                     ");\n"
         )
     }
