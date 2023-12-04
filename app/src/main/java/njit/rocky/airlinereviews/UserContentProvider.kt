@@ -23,7 +23,6 @@ class UserContentProvider : ContentProvider() {
     }
 
     override fun getType(uri: Uri): String? {
-        // 返回数据的 MIME 类型，例如："vnd.android.cursor.dir/vnd.example.data"
         return null
     }
 
