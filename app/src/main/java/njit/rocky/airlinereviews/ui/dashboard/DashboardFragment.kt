@@ -15,7 +15,12 @@ import njit.rocky.airlinereviews.R
 class DashboardFragment : Fragment() {
 
     private lateinit var viewModel: DashboardViewModel
-    private lateinit var editText1: EditText // Initialize these with appropriate IDs
+    private lateinit var editText1: EditText
+    private lateinit var editText2: EditText
+    private lateinit var editText3: EditText
+    private lateinit var editText4: EditText
+    private lateinit var editText5: EditText
+    private lateinit var editText6: EditText
     private lateinit var imageViewPicture: ImageView
     private lateinit var buttonSubmit: Button
 
@@ -25,18 +30,32 @@ class DashboardFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_dashboard, container, false)
 
         editText1 = view.findViewById(R.id.editText1)
-        // Initialize other views
+        editText2 = view.findViewById(R.id.editText2)
+        editText3 = view.findViewById(R.id.editText3)
+        editText4 = view.findViewById(R.id.editText4)
+        editText5 = view.findViewById(R.id.editText5)
+        editText6 = view.findViewById(R.id.editText6)
         imageViewPicture = view.findViewById(R.id.imageViewPicture)
         buttonSubmit = view.findViewById(R.id.buttonSubmit)
 
-        viewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
+        viewModel = ViewModelProvider(this)[DashboardViewModel::class.java]
 
         buttonSubmit.setOnClickListener {  // TODO: have some problem now
             val airlineName = editText1.text.toString()
             if (airlineName.isEmpty()) {
-                Toast.makeText(requireActivity(), "Empty Airline Name", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Empty Airline Name", Toast.LENGTH_SHORT).show()
+            } else {
+                viewModel.fetchDataFromServer(
+                    arrayOf(
+                        airlineName,
+                        editText2.text.toString(),
+                        editText3.text.toString(),
+                        editText4.text.toString(),
+                        editText5.text.toString(),
+                        editText6.text.toString()
+                    )
+                )
             }
-            viewModel.fetchDataFromServer(airlineName)
         }
 
         viewModel.imageData.observe(viewLifecycleOwner) { bitmap ->
