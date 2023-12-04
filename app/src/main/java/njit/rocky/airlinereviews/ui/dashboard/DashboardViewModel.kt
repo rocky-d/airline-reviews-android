@@ -33,7 +33,7 @@ class DashboardViewModel : ViewModel() {
     }
 
     private fun createJsonData(airlineName: Array<String>): String {
-        return "{\"arl_name\":\"${airlineName[0]}\",\"width\":\"${airlineName[3]}\",\"height\":\"${airlineName[4]}\",\"bc\":\"${airlineName[5]}\"}"
+        return "{\"arl_name\":\"${airlineName[0]}\",\"width\":\"${airlineName[3].ifEmpty { 300 }}\",\"height\":\"${airlineName[4].ifEmpty { 200 }}\",\"bc\":\"${airlineName[5]}\"}"
     }
 
     private suspend fun sendDataToServer(jsonData: String): ByteArray {
