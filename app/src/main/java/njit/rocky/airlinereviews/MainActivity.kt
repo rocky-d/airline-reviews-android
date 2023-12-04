@@ -38,26 +38,21 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        // Add any necessary logic when the activity starts
     }
 
     override fun onResume() {
         super.onResume()
-        // Add any necessary logic when the activity resumes
     }
 
     override fun onPause() {
         super.onPause()
-        // Add any necessary logic when the activity pauses
     }
 
     override fun onStop() {
         super.onStop()
-        // Add any necessary logic when the activity stops
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        // Add any necessary logic when the activity is destroyed
     }
 }
