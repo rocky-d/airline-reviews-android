@@ -2,7 +2,10 @@ package njit.rocky.airlinereviews
 
 import android.content.ContentValues
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -14,6 +17,8 @@ import kotlin.system.exitProcess
 
 class LoginActivity : AppCompatActivity() {
 
+    private lateinit var vibrator: Vibrator
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -22,13 +27,16 @@ class LoginActivity : AppCompatActivity() {
         val editTextPassword = findViewById<EditText>(R.id.editTextPassword)
         val buttonLogin = findViewById<Button>(R.id.buttonLogin)
 
+        vibrator = getSystemService(VIBRATOR_SERVICE) as Vibrator
+
         buttonLogin.setOnClickListener {
             val username = editTextUsername.text.toString()
             val password = editTextPassword.text.toString()
 
             if (username.isEmpty() || password.isEmpty()) {
-                // Username or password is empty, show a toast and treat it as invalid credentials
+                // Username or password is empty, show a toast and vibrate the phone for 2 seconds
                 Toast.makeText(this, "Empty Username or Password", Toast.LENGTH_SHORT).show()
+                vibratePhone()
             } else {
                 if (isValidCredentials(username, password)) {
                     // Credentials are valid, navigate to the main activity
@@ -39,6 +47,15 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(this, "Invalid Credentials", Toast.LENGTH_SHORT).show()
                 }
             }
+        }
+    }
+
+    private fun vibratePhone() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createOneShot(2000, VibrationEffect.DEFAULT_AMPLITUDE))
+        } else {
+            // Deprecated in API 26
+            vibrator.vibrate(2000)
         }
     }
 
