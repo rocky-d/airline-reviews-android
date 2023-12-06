@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/textViewUsername"
         android:layout_marginLeft="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="64dp"
         android:text="Current Email Address: NONE"
         android:textSize="16sp" />
 
