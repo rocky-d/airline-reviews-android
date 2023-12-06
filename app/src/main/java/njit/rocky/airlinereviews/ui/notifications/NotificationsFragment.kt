@@ -1,5 +1,7 @@
 package njit.rocky.airlinereviews.ui.notifications
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +17,6 @@ class NotificationsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         val rootView = inflater.inflate(R.layout.fragment_notifications, container, false)
-
         val notificationListView = rootView.findViewById<ListView>(R.id.notificationListView)
         val notificationTexts = arrayOf(
             "SU, ULE, AB Aviation, China",
@@ -487,10 +488,20 @@ class NotificationsFragment : Fragment() {
             "SA, NNP, ZIPAIR, United States"
         )
 
-        val adapter =
-            ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, notificationTexts)
+        val adapter = ArrayAdapter(
+            requireContext(), android.R.layout.simple_list_item_1, notificationTexts
+        )
         notificationListView.adapter = adapter
 
+        notificationListView.setOnItemClickListener { parent, view, position, id ->
+            val selectedItem = parent.getItemAtPosition(position) as String
+            println(selectedItem.split(", "))
+            searchInBrowser(selectedItem.split(", ")[2])
+        }
         return rootView
+    }
+
+    private fun searchInBrowser(query: String) {
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://bing.com/search?q=$query")))
     }
 }
