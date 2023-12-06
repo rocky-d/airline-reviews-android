@@ -14,7 +14,8 @@
         android:background="@color/white"
         android:gravity="center"
         android:hint="Username"
-        android:inputType="textNoSuggestions" />
+        android:inputType="textNoSuggestions"
+        android:lines="1" />
 
     <EditText
         android:id="@+id/editTextPassword"
@@ -26,7 +27,8 @@
         android:background="@color/white"
         android:gravity="center"
         android:hint="Password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:lines="1" />
 
     <Button
         android:id="@+id/buttonLogin"
