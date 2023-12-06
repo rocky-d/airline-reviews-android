@@ -487,15 +487,12 @@ class NotificationsFragment : Fragment() {
             "BO, XJX, Zambia Airways, Switzerland",
             "SA, NNP, ZIPAIR, United States"
         )
-
         val adapter = ArrayAdapter(
             requireContext(), android.R.layout.simple_list_item_1, notificationTexts
         )
         notificationListView.adapter = adapter
-
         notificationListView.setOnItemClickListener { parent, view, position, id ->
             val selectedItem = parent.getItemAtPosition(position) as String
-            println(selectedItem.split(", "))
             searchInBrowser(selectedItem.split(", ")[2])
         }
         return rootView
