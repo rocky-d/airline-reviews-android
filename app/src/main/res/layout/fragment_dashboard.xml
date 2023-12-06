@@ -24,17 +24,20 @@
         android:layout_height="48dp"
         android:layout_marginTop="4dp"
         android:hint="Enter Airline Name*"
+        android:inputType="text"
+        android:lines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
 
-    <!-- Text fields -->
     <EditText
         android:id="@+id/editText2"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginTop="2dp"
         android:hint="Enter Reviews Day/Month/Year From"
+        android:inputType="text"
+        android:lines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText1" />
@@ -45,6 +48,8 @@
         android:layout_height="48dp"
         android:layout_marginTop="2dp"
         android:hint="Enter Reviews Day/Month/Year Until"
+        android:inputType="text"
+        android:lines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText2" />
@@ -55,6 +60,8 @@
         android:layout_height="48dp"
         android:layout_marginTop="2dp"
         android:hint="Enter Width"
+        android:inputType="text"
+        android:lines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText3" />
@@ -65,6 +72,8 @@
         android:layout_height="48dp"
         android:layout_marginTop="2dp"
         android:hint="Enter Height"
+        android:inputType="text"
+        android:lines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText4" />
@@ -75,6 +84,8 @@
         android:layout_height="48dp"
         android:layout_marginTop="2dp"
         android:hint="Enter Background Color"
+        android:inputType="text"
+        android:lines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText5" />
