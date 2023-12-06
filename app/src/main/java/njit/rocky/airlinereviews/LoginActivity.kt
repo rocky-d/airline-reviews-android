@@ -38,13 +38,15 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "Empty Username or Password", Toast.LENGTH_SHORT).show()
                 vibratePhone()
             } else {
-                if (isValidCredentials(username, password)) {
-                    // Credentials are valid, navigate to the main activity
-                    startActivity(Intent(this, MainActivity::class.java))
-                    // finish() // Optional: finish the login activity to prevent going back to it
-                } else {
+                if (!isValidCredentials(username, password)) {
                     // Invalid credentials, show a toast or an error message
                     Toast.makeText(this, "Invalid Credentials", Toast.LENGTH_SHORT).show()
+                } else {
+                    // Credentials are valid, navigate to the main activity
+                    startActivity(Intent(this, MainActivity::class.java))
+                    editTextUsername.text.clear()
+                    editTextPassword.text.clear()
+                    // finish() // Optional: finish the login activity to prevent going back to it
                 }
             }
         }
