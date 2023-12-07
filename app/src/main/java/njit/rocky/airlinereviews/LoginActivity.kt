@@ -43,7 +43,9 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(this, "Invalid Credentials", Toast.LENGTH_SHORT).show()
                 } else {
                     // Credentials are valid, navigate to the main activity
-                    startActivity(Intent(this, MainActivity::class.java))
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra("USERNAME", username)
+                    startActivity(intent)
                     editTextUsername.text.clear()
                     editTextPassword.text.clear()
                     // finish() // Optional: finish the login activity to prevent going back to it
