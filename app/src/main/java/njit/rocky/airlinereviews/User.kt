@@ -2,6 +2,7 @@ package njit.rocky.airlinereviews
 
 data class User(
     val username: String,
-    val email: String,
-    val phone: String
+    val hashedPassword: Long,
+    var email: String?,
+    var phone: String?
 )
