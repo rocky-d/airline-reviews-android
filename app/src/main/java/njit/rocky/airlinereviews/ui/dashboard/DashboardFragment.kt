@@ -40,7 +40,7 @@ class DashboardFragment : Fragment() {
 
         viewModel = ViewModelProvider(this)[DashboardViewModel::class.java]
 
-        buttonSubmit.setOnClickListener {  // TODO: have some problem now
+        buttonSubmit.setOnClickListener {
             val airlineName = editText1.text.toString()
             if (airlineName.isEmpty()) {
                 Toast.makeText(context, "Empty Airline Name", Toast.LENGTH_SHORT).show()
